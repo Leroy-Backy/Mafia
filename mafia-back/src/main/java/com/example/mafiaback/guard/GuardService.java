@@ -3,6 +3,8 @@ package com.example.mafiaback.guard;
 import com.example.mafiaback.errorhandling.MafiaEntityNotFoundException;
 import com.example.mafiaback.manager.Manager;
 import com.example.mafiaback.manager.ManagerService;
+import com.example.mafiaback.point.Point;
+import com.example.mafiaback.point.PointDto;
 import com.example.mafiaback.security.AuthService;
 import com.example.mafiaback.user.Role;
 import com.example.mafiaback.user.UserDto;
@@ -46,6 +48,18 @@ public class GuardService {
     List<Guard> guards = guardRepository.findByManagerId(manager.getId());
     
     return guards.stream().map(UserDto::fromGuard).collect(Collectors.toList());
+  }
+
+  public UserDto getGuardById(Integer id) {
+    Optional<Guard> guardOptional = guardRepository.findById(id);
+
+    if(guardOptional.isEmpty()) {
+      throw new MafiaEntityNotFoundException("Guard with id: " + id + " not found");
+    }
+
+    managerService.checkAccess(guardOptional.get().getManagerId());
+
+    return UserDto.fromGuard(guardOptional.get());
   }
   
   @Transactional

@@ -7,7 +7,8 @@ import java.util.List;
 
 public enum Role {
   ROLE_GUARD,
-  ROLE_MANAGER;
+  ROLE_MANAGER,
+  ROLE_CLIENT;
   
   public List<GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority(this.name()));

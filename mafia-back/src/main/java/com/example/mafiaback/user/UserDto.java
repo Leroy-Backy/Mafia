@@ -21,6 +21,16 @@ public class UserDto {
   private String city;
   private String district;
   
+  public static UserDto fromUser(User user) {
+    return UserDto.builder()
+        .id(user.getId())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .email(user.getEmail())
+        .phone(user.getPhone())
+        .build();
+  }
+  
   public static UserDto fromGuard(Guard guard) {
     return UserDto.builder()
         .id(guard.getId())
