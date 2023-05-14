@@ -20,6 +20,7 @@ public class UserDto {
   private Integer managerId;
   private String city;
   private String district;
+  private Role role;
   
   public static UserDto fromUser(User user) {
     return UserDto.builder()
@@ -28,6 +29,7 @@ public class UserDto {
         .lastName(user.getLastName())
         .email(user.getEmail())
         .phone(user.getPhone())
+        .role(user.getRole())
         .build();
   }
   

@@ -1,6 +1,6 @@
 package com.example.mafiaback.security;
 
-import com.example.mafiaback.guard.Guard;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,21 +37,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return;
     }
     jwt = authHeader.substring(7);
-    String username = jwtService.extractUsername(jwt);
-    if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-      if(!jwtService.isTokenExpired(jwt)) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            userDetails,
-            null,
-            userDetails.getAuthorities()
-        );
-        authToken.setDetails(
-            new WebAuthenticationDetailsSource().buildDetails(request)
-        );
-        
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+    try {
+      String username = jwtService.extractUsername(jwt);
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (!jwtService.isTokenExpired(jwt)) {
+          UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+              userDetails,
+              null,
+              userDetails.getAuthorities()
+          );
+          authToken.setDetails(
+              new WebAuthenticationDetailsSource().buildDetails(request)
+          );
+
+          SecurityContextHolder.getContext().setAuthentication(authToken);
+        }
       }
+    } catch (JwtException ex) {
+      response.sendError(401, "Wrong jwt token");
+      return;
     }
     filterChain.doFilter(request, response);
   }
