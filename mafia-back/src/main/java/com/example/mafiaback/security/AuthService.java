@@ -57,6 +57,18 @@ public class AuthService {
     tokenRepository.delete(token.get());
   }
   
+  public void makeChangePasswordRequestForController(String email) {
+    Optional<User> userOptional = userRepository.findByEmail(email);
+    
+    if(userOptional.isEmpty()) {
+      throw new MafiaEntityNotFoundException("User with email " + email + " not found");
+    }
+    
+    User user = userOptional.get();
+    
+    makeChangePasswordRequest(user, user.getEmail(), user.getFirstName());
+  }
+  
   public void makeChangePasswordRequest(User user, String email, String firstName) {
     String token = UUID.randomUUID().toString();
 

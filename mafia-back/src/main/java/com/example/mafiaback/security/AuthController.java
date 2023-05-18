@@ -2,10 +2,8 @@ package com.example.mafiaback.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -17,6 +15,12 @@ public class AuthController {
   @PostMapping("/password/change")
   public ResponseEntity changePassword(@RequestBody ChangePasswordRequest request) {
     authService.changePassword(request);
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/password/change/{email}")
+  public ResponseEntity changePassword(@NonNull @PathVariable String email) {
+    authService.makeChangePasswordRequestForController(email);
     return ResponseEntity.ok().build();
   }
 

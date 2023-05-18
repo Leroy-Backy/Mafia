@@ -10,13 +10,11 @@ export const AuthProvider = ({children}) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   
   const login = (email, password) => {
-    console.log("LOGIN>>>", email, password)
     return new Promise((resolve, reject) => {
       api.post("/api/auth/authenticate", {
         "email": email,
         "password": password
       }).then(res => {
-        console.log("RES LOGIN>>>", res)
         localStorage.setItem("jwt", res.data.token);
         getCurrentUser().then(res => {
           setUser(res.data);
@@ -28,7 +26,6 @@ export const AuthProvider = ({children}) => {
           reject(err)
         });
       }).catch(err => {
-        console.log("ERR LOGIN>>>")
         reject(err);
       })
     })

@@ -14,6 +14,9 @@ import LogoutPage from "./pages/LogoutPage";
 import GuardsPage from "./pages/GuardsPage";
 import {isManager} from "./utils/authUtils";
 import LoadingSpinner from "./components/LoadingSpinner";
+import CreateGuardPage from "./pages/CreateGuardPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
+import ChangePasswordRequestPage from "./pages/ChangePasswordRequestPage";
 
 function App() {
   const [isInit, setInit] = useState(false);
@@ -36,11 +39,16 @@ function App() {
               <Route path="/user" element={<ProfilePage/>}/>
               <Route path="/user/:id" element={<ProfilePage/>}/>
               <Route element={<ManagerRoutes/>}>
-                <Route path="/guards" element={<GuardsPage/>}/>
+                <Route path="/guards">
+                  <Route index element={<GuardsPage/>}/>
+                  <Route path="new" element={<CreateGuardPage/>}/>
+                </Route>
               </Route>
             </Route>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/logout" element={<LogoutPage/>}/>
+            <Route path="/changepassword" element={<ChangePasswordRequestPage/>}/>
+            <Route path="/changepassword/:token" element={<ChangePasswordPage/>}/>
             <Route path="/notfound" element={<NotFoundPage/>}/>
             <Route path="/accessdenied" element={<AccessDeniedPage/>}/>
             <Route path="*" element={<Navigate to="/notfound" replace />}/>

@@ -17,3 +17,12 @@
   margin-left: -50px;
   margin-top: -50px;
 }
+
+.add-button {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+}

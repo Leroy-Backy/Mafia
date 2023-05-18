@@ -5,6 +5,7 @@ import {useForm} from "react-hook-form";
 import {Alert} from "react-bootstrap";
 import {useState} from "react";
 import {useAuth} from "../context/AuthProvider";
+import {Link} from "react-router-dom";
 
 export default function LoginPage() {
   
@@ -68,6 +69,11 @@ export default function LoginPage() {
                   {errors.password.message}
                 </Form.Text>
               )}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Link to="/changepassword">
+                Change password
+              </Link>
             </Form.Group>
             <Button variant="primary" type="submit">
               Login
