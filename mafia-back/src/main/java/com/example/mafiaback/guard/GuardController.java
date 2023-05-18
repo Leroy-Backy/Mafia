@@ -30,12 +30,6 @@ public class GuardController {
   public ResponseEntity<List<UserDto>> getManagersGuards() {
     return ResponseEntity.ok(guardService.getManagersGuards());
   }
-
-  @GetMapping("/{id}")
-  @PreAuthorize("hasAuthority('ROLE_MANAGER')")
-  public ResponseEntity<UserDto> getGuardById(@NonNull @PathVariable Integer id) {
-    return ResponseEntity.ok(guardService.getGuardById(id));
-  }
   
   @DeleteMapping("/{id}")
   @PreAuthorize("hasAuthority('ROLE_MANAGER')")

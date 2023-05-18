@@ -49,18 +49,6 @@ public class GuardService {
     
     return guards.stream().map(UserDto::fromGuard).collect(Collectors.toList());
   }
-
-  public UserDto getGuardById(Integer id) {
-    Optional<Guard> guardOptional = guardRepository.findById(id);
-
-    if(guardOptional.isEmpty()) {
-      throw new MafiaEntityNotFoundException("Guard with id: " + id + " not found");
-    }
-
-    managerService.checkAccess(guardOptional.get().getManagerId());
-
-    return UserDto.fromGuard(guardOptional.get());
-  }
   
   @Transactional
   public Integer createGuard(UserDto userDto) {

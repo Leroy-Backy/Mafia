@@ -41,6 +41,7 @@ public class UserDto {
         .email(guard.getEmail())
         .phone(guard.getPhone())
         .managerId(guard.getManagerId())
+        .role(guard.getRole())
         .build();
   }
 
@@ -53,6 +54,7 @@ public class UserDto {
         .phone(manager.getPhone())
         .city(manager.getCity())
         .district(manager.getDistrict())
+        .role(manager.getRole())
         .build();
   }
 }

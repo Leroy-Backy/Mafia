@@ -22,24 +22,22 @@ export default function LoginPage() {
   const [showAlert, setShowAlert] = useState(false);
   const {login} = useAuth();
   
-  console.log(errors)
-  
   const onSubmit = async ({email, password}) => {
-    console.log("SUBMIT>>>", email, password);
     try {
       await login(email, password);
       setShowAlert(false);
     } catch (error) {
-      console.log("Error>>>", error)
       setShowAlert(true);
     }
   }
   
   return (
     <div>
-      <Card style={{ width: '25rem', margin: "auto", marginTop: "5rem" }}>
+      <Card className="m-auto mt-4" style={{ width: '25rem'}}>
+        <Card.Header style={{ textAlign: "center", lineHeight: 2 }}>
+          Authorization
+        </Card.Header>
         <Card.Body>
-          <Card.Title style={{ textAlign: "center", lineHeight: 3 }}>Authorization</Card.Title>
           {showAlert && <Alert variant="danger">
             Login failed, password or email is incorrect
           </Alert>}

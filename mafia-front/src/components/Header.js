@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import {Link} from "react-router-dom";
 
-export default function Header({isLoggedIn}) {
+export default function Header({isLoggedIn, isManager}) {
   return (
     <Navbar collapseOnSelect bg="light" expand="sm">
       <Container>
@@ -12,17 +12,24 @@ export default function Header({isLoggedIn}) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/" eventKey="/">
-              <div>Home</div>
+            <Nav.Link as={Link} to="/user" eventKey="/user">
+              <div>Profile</div>
             </Nav.Link>
+            {isManager &&
+              <Nav.Link as={Link} to="/guards" eventKey="/guards">
+                <div>Guards</div>
+              </Nav.Link>
+            }
+          </Nav>
+          <div>{isLoggedIn ? 
+            <Nav.Link as={Link} to="/logout" eventKey="/logout">
+              <div>Logout</div>
+            </Nav.Link>
+            :
             <Nav.Link as={Link} to="/login" eventKey="/login">
               <div>Login</div>
             </Nav.Link>
-            <Nav.Link as={Link} to="/test" eventKey="/test">
-              <div>Test</div>
-            </Nav.Link>
-          </Nav>
-          <div>{!isLoggedIn ? <div className="text-danger">Not logged In</div> : <div className="text-success">Logged in</div> }</div>
+          }</div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
