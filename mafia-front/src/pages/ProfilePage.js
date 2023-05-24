@@ -11,9 +11,10 @@ export default function ProfilePage() {
   const [renderedUser, setRenderedUser] = useState(null);
   const {user} = useAuth();
   const navigation = useNavigate();
+  const [rerender, setRerender] = useState(false);
   
   useEffect(() => {
-    if(!user) {
+    if(!user || !navigation) {
       return;
     }
     if(!id) {
@@ -31,12 +32,12 @@ export default function ProfilePage() {
         }
       });
     }
-  }, [user]);
+  }, [user, id, navigation, rerender]);
 
   return (
     renderedUser ?
       <div>
-        <UserCard full manager={isManager(renderedUser.role)} user={renderedUser}/>
+        <UserCard manager={isManager(renderedUser.role)} onUserEdit={() => setRerender(prev => !prev)} renderedUser={renderedUser}/>
       </div>
       :
       <LoadingSpinner/>

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//todo test new methods
 
 @RestController
 @RequiredArgsConstructor

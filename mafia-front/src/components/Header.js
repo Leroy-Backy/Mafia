@@ -16,9 +16,14 @@ export default function Header({isLoggedIn, isManager}) {
               <div>Profile</div>
             </Nav.Link>
             {isManager &&
-              <Nav.Link as={Link} to="/guards" eventKey="/guards">
-                <div>Guards</div>
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/guards" eventKey="/guards">
+                  <div>Guards</div>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/points" eventKey="/points">
+                  <div>Points</div>
+                </Nav.Link>
+              </>
             }
           </Nav>
           <div>{isLoggedIn ? 

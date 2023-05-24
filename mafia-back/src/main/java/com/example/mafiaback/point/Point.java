@@ -23,9 +23,9 @@ public class Point {
   private String name;
   private Integer price;
   private Timestamp lastPaymentDate;
-  @Column(precision = 10, scale = 6)
+  @Column(precision = 10, scale = 7)
   private BigDecimal latitude;
-  @Column(precision = 10, scale = 6)
+  @Column(precision = 10, scale = 7)
   private BigDecimal longitude;
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "address_id")

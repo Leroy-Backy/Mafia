@@ -1,32 +1,32 @@
 import {useEffect, useState} from "react";
-import api from "../utils/Api";
-import UserCard from "../components/UserCard";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row"
-import LoadingSpinner from "../components/LoadingSpinner";
 import Card from "react-bootstrap/Card";
-import * as Icon from "react-bootstrap-icons";
 import {Link} from "react-router-dom";
+import * as Icon from "react-bootstrap-icons";
+import api from "../utils/Api";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import LoadingSpinner from "../components/LoadingSpinner";
+import PointCard from "../components/PointCard";
 
-export default function GuardsPage() {
+export default function PointsPage() {
   const [data, setData] = useState(null);
   const [rerender, setRerender] = useState(false);
-  
-  const addNewCard = () => {
+
+  const addNewPoint = () => {
     return (
       <Card className="mt-4" style={{width: "25rem"}}>
         <Card.Body className="d-flex justify-content-center">
-          <Link to="/guards/new" className="add-button">
-            <Icon.PersonAdd size={30} />
-            <div className="ms-2">Add new Guard</div>
+          <Link to="/points/new" className="add-button">
+            <Icon.PlusCircle size={30} />
+            <div className="ms-2">Add new Point</div>
           </Link>
         </Card.Body>
       </Card>
     );
   }
-  
+
   useEffect(() => {
-    api.get(`/api/guard`).then(res => {
+    api.get(`/api/point`).then(res => {
       setData(res.data);
     });
   }, [rerender]);
@@ -35,13 +35,13 @@ export default function GuardsPage() {
     data ?
       <div>
         <Row>
-          {data.map(guard => (
-            <Col key={guard.id} className="d-flex justify-content-center"  md={12} lg={6}>
-              <UserCard onUserEdit={() => setRerender(prev => !prev)} renderedUser={guard}></UserCard>
+          {data.map(point => (
+            <Col key={point.id} className="d-flex justify-content-center"  md={12} lg={6}>
+              <PointCard renderedPoint={point} onPointUpdate={() => setRerender(prev => !prev)} />
             </Col>)
           )}
           <Col key="new" className="d-flex justify-content-center"  md={12} lg={6}>
-            {addNewCard()}
+            {addNewPoint()}
           </Col>
         </Row>
       </div>

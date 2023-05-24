@@ -17,6 +17,8 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import CreateGuardPage from "./pages/CreateGuardPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import ChangePasswordRequestPage from "./pages/ChangePasswordRequestPage";
+import PointsPage from "./pages/PointsPage";
+import CreatePointPage from "./pages/CreatePointPage";
 
 function App() {
   const [isInit, setInit] = useState(false);
@@ -42,6 +44,10 @@ function App() {
                 <Route path="/guards">
                   <Route index element={<GuardsPage/>}/>
                   <Route path="new" element={<CreateGuardPage/>}/>
+                </Route>
+                <Route path="/points">
+                  <Route index element={<PointsPage/>}/>
+                  <Route path="new" element={<CreatePointPage/>}/>
                 </Route>
               </Route>
             </Route>
