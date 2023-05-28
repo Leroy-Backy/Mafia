@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Mafia.iml" filepath="$PROJECT_DIR$/.idea/Mafia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mafia-back/mafia-back.iml" filepath="$PROJECT_DIR$/mafia-back/mafia-back.iml" />
     </modules>
   </component>
 </project>

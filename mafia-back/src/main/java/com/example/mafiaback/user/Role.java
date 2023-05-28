@@ -13,4 +13,8 @@ public enum Role {
   public List<GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority(this.name()));
   }
+  
+  public static boolean isManager(Role role) {
+    return ROLE_MANAGER.equals(role);
+  }
 }

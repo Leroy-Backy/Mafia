@@ -3,8 +3,6 @@ package com.example.mafiaback.guard;
 import com.example.mafiaback.errorhandling.MafiaEntityNotFoundException;
 import com.example.mafiaback.manager.Manager;
 import com.example.mafiaback.manager.ManagerService;
-import com.example.mafiaback.point.Point;
-import com.example.mafiaback.point.PointDto;
 import com.example.mafiaback.security.AuthService;
 import com.example.mafiaback.user.Role;
 import com.example.mafiaback.user.UserDto;

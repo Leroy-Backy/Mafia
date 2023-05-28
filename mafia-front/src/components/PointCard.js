@@ -7,6 +7,14 @@ import PointForm from "./PointForm";
 
 export default function PointCard({renderedPoint, onPointUpdate}) {
   const [showModal, setShowModal] = useState(false);
+  
+  const getMapsUrl = () => {
+    if(renderedPoint.latitude && renderedPoint.longitude) {
+      return `${renderedPoint.longitude},${renderedPoint.latitude}`;
+    } else {
+      return `${renderedPoint.address.street}+${renderedPoint.address.houseNumber},+${renderedPoint.address.city}`;
+    }
+  }
 
   return (
     <>
@@ -16,7 +24,7 @@ export default function PointCard({renderedPoint, onPointUpdate}) {
                   type="button" onClick={() => setShowModal(prev => !prev)}>
             Edit
           </Button>
-          <iframe src={`https://maps.google.com/maps?q=${renderedPoint.longitude},${renderedPoint.latitude}&z=14&output=embed`} height="450" width="100%"></iframe>
+          <iframe title={renderedPoint.id} src={`https://maps.google.com/maps?q=${getMapsUrl()}&z=14&output=embed`} height="450" width="100%"></iframe>
         </div>
         <Card.Body>
           <Card.Title>

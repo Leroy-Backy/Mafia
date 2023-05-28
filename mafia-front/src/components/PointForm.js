@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Accordion from "react-bootstrap/Accordion";
 
 export default function PointForm({create = true, onSuccess, renderedPoint}) {
   const [error, setError] = useState(null);
@@ -42,7 +43,6 @@ export default function PointForm({create = true, onSuccess, renderedPoint}) {
   });
 
   const onSubmit = (userFromForm) => {
-    console.log("SUBMIT>>>", userFromForm)
     setButtonDisabled(true);
     setError(null);
     setSuccess(null);
@@ -254,39 +254,44 @@ export default function PointForm({create = true, onSuccess, renderedPoint}) {
           </Card.Body>
         </Card>
 
-        <Form.Group className="mb-3" controlId="formBasicLongitude">
-          <Form.Label>Longitude</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Longitude"
-            {...register("longitude", {
-              required: "Longitude is required",
-              pattern: {value: /^[0-9]{2}.[0-9]{3,7}$/, message: "Wrong format, example: 10.123456"}
-            })}
-          />
-          {errors.longitude && (
-            <Form.Text className="text-danger">
-              {errors.longitude.message}
-            </Form.Text>
-          )}
-        </Form.Group>
+        <Accordion className="mt-3 mb-3">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Set coordinates</Accordion.Header>
+            <Accordion.Body>
+              <Form.Group className="mb-3" controlId="formBasicLongitude">
+                <Form.Label>Longitude</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Longitude"
+                  {...register("longitude", {
+                    pattern: {value: /^[0-9]{2}.[0-9]{3,7}$/, message: "Wrong format, example: 10.123456"}
+                  })}
+                />
+                {errors.longitude && (
+                  <Form.Text className="text-danger">
+                    {errors.longitude.message}
+                  </Form.Text>
+                )}
+              </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicLatitude">
-          <Form.Label>Latitude</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Latitude"
-            {...register("latitude", {
-              required: "Latitude is required",
-              pattern: {value: /^[0-9]{2}.[0-9]{3,7}$/, message: "Wrong format"}
-            })}
-          />
-          {errors.latitude && (
-            <Form.Text className="text-danger">
-              {errors.latitude.message}
-            </Form.Text>
-          )}
-        </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicLatitude">
+                <Form.Label>Latitude</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Latitude"
+                  {...register("latitude", {
+                    pattern: {value: /^[0-9]{2}.[0-9]{3,7}$/, message: "Wrong format"}
+                  })}
+                />
+                {errors.latitude && (
+                  <Form.Text className="text-danger">
+                    {errors.latitude.message}
+                  </Form.Text>
+                )}
+              </Form.Group>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
 
         <Button variant="primary" type="submit" disabled={buttonDisabled}>
           {create ? "Create" : "Edit"}

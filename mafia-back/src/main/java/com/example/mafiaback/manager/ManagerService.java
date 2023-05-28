@@ -1,7 +1,6 @@
 package com.example.mafiaback.manager;
 
 import com.example.mafiaback.errorhandling.MafiaForbiddenException;
-import com.example.mafiaback.guard.Guard;
 import com.example.mafiaback.user.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

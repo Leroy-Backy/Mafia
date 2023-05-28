@@ -19,6 +19,7 @@ import ChangePasswordPage from "./pages/ChangePasswordPage";
 import ChangePasswordRequestPage from "./pages/ChangePasswordRequestPage";
 import PointsPage from "./pages/PointsPage";
 import CreatePointPage from "./pages/CreatePointPage";
+import TestPage from "./pages/TestPage";
 
 function App() {
   const [isInit, setInit] = useState(false);
@@ -55,6 +56,7 @@ function App() {
             <Route path="/logout" element={<LogoutPage/>}/>
             <Route path="/changepassword" element={<ChangePasswordRequestPage/>}/>
             <Route path="/changepassword/:token" element={<ChangePasswordPage/>}/>
+            <Route path="/test" element={<TestPage/>}/>
             <Route path="/notfound" element={<NotFoundPage/>}/>
             <Route path="/accessdenied" element={<AccessDeniedPage/>}/>
             <Route path="*" element={<Navigate to="/notfound" replace />}/>

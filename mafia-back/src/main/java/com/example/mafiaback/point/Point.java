@@ -23,14 +23,18 @@ public class Point {
   private String name;
   private Integer price;
   private Timestamp lastPaymentDate;
+  
   @Column(precision = 10, scale = 7)
   private BigDecimal latitude;
+  
   @Column(precision = 10, scale = 7)
   private BigDecimal longitude;
+  
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "address_id")
   private Address address;
-  @ManyToOne(cascade = CascadeType.ALL)
+  
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "client_id")
   private User client;
   private Integer managerId;

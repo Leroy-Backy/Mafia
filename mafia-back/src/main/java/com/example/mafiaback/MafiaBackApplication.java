@@ -19,19 +19,21 @@ public class MafiaBackApplication {
   @Bean
   public CommandLineRunner loadData(ManagerRepository managerRepository, PasswordEncoder passwordEncoder) {
     return args -> {
-      Manager manager = Manager.builder()
-          .firstName("Jan")
-          .lastName("Kowalski")
-          .city("Lublin")
-          .district("Śródmieście")
-          .role(Role.ROLE_MANAGER)
-          .email("manager@gmail.com")
-          .password(passwordEncoder.encode("manager"))
-          .phone("111222333")
-          .enabled(true)
-          .build();
-      
-      managerRepository.save(manager);
+      if(managerRepository.findByEmail("manager@gmail.com").isEmpty()) {
+        Manager manager = Manager.builder()
+            .firstName("Jan")
+            .lastName("Kowalski")
+            .city("Lublin")
+            .district("Śródmieście")
+            .role(Role.ROLE_MANAGER)
+            .email("manager@gmail.com")
+            .password(passwordEncoder.encode("manager"))
+            .phone("111222333")
+            .enabled(true)
+            .build();
+
+        managerRepository.save(manager);
+      }
     };
   }
   
