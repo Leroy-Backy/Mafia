@@ -33,6 +33,12 @@ public class TaskController {
     return ResponseEntity.ok(taskService.getAllTasksForUser());
   }
   
+  @GetMapping("/{id}")
+  @PreAuthorize("isAuthenticated()")
+  public ResponseEntity<TaskDto> getTaskById(@NonNull @PathVariable Integer id) {
+    return ResponseEntity.ok(taskService.getTaskById(id));
+  }
+  
   @DeleteMapping("/{id}")
   @PreAuthorize("hasAuthority('ROLE_MANAGER')")
   public ResponseEntity deleteTask(@NonNull @PathVariable Integer id) {

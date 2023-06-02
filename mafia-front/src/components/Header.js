@@ -23,6 +23,9 @@ export default function Header({isLoggedIn, isManager}) {
                 <Nav.Link as={Link} to="/points" eventKey="/points">
                   <div>Points</div>
                 </Nav.Link>
+                <Nav.Link as={Link} to="/tasks" eventKey="/tasks">
+                  <div>Tasks</div>
+                </Nav.Link>
               </>
             }
           </Nav>

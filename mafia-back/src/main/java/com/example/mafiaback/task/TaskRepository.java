@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
-  List<Task> findByManagerId(Integer id);
-  List<Task> findByGuardId(Integer id);
+  List<Task> findByManagerIdOrderByCreatedAtDesc(Integer id);
+  List<Task> findByGuardIdOrderByCreatedAtDesc(Integer id);
 }

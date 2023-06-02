@@ -37,8 +37,6 @@ public class PointService {
       throw new MafiaEntityNotFoundException("Point with id: " + id + " not found");
     }
     
-    managerService.checkAccess(pointOptional.get().getManagerId());
-    
     return PointDto.fromPoint(pointOptional.get());
   }
   

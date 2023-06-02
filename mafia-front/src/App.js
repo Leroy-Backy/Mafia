@@ -20,6 +20,9 @@ import ChangePasswordRequestPage from "./pages/ChangePasswordRequestPage";
 import PointsPage from "./pages/PointsPage";
 import CreatePointPage from "./pages/CreatePointPage";
 import TestPage from "./pages/TestPage";
+import CreateTaskPage from "./pages/CreateTaskPage";
+import PointPage from "./pages/PointPage";
+import TaskPage from "./pages/TaskPage";
 
 function App() {
   const [isInit, setInit] = useState(false);
@@ -41,6 +44,9 @@ function App() {
               <Route path="/" element={<Navigate to="/user" replace />}/>
               <Route path="/user" element={<ProfilePage/>}/>
               <Route path="/user/:id" element={<ProfilePage/>}/>
+              <Route path="/tasks">
+                <Route path=":id" element={<TaskPage/>}/>
+              </Route>
               <Route element={<ManagerRoutes/>}>
                 <Route path="/guards">
                   <Route index element={<GuardsPage/>}/>
@@ -49,7 +55,9 @@ function App() {
                 <Route path="/points">
                   <Route index element={<PointsPage/>}/>
                   <Route path="new" element={<CreatePointPage/>}/>
+                  <Route path=":id" element={<PointPage/>}/>
                 </Route>
+                <Route path="/tasks/new" element={<CreateTaskPage/>}/>
               </Route>
             </Route>
             <Route path="/login" element={<LoginPage/>}/>

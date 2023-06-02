@@ -34,9 +34,9 @@ public class TaskService {
     List<Task> tasks;
     
     if(Role.isManager(currentUser.getRole())) {
-      tasks = taskRepository.findByManagerId(currentUser.getId());
+      tasks = taskRepository.findByManagerIdOrderByCreatedAtDesc(currentUser.getId());
     } else {
-      tasks = taskRepository.findByGuardId(currentUser.getId());
+      tasks = taskRepository.findByGuardIdOrderByCreatedAtDesc(currentUser.getId());
     }
     
     return tasks.stream().map(TaskDto::fromTask).toList();
@@ -121,5 +121,24 @@ public class TaskService {
     managerService.checkAccess(taskOptional.get().getManager().getId());
     
     taskRepository.delete(taskOptional.get());
+  }
+
+  public TaskDto getTaskById(Integer id) {
+    Optional<Task> taskOptional = taskRepository.findById(id);
+    
+    if(taskOptional.isEmpty()) {
+      throw new MafiaEntityNotFoundException("Task with id: " + id + " not found");
+    }
+    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    
+    Task task = taskOptional.get();
+
+    if ((Role.isManager(currentUser.getRole()) && !task.getManager().getId().equals(currentUser.getId())) ||
+        (!Role.isManager(currentUser.getRole()) && !task.getGuard().getId().equals(currentUser.getId()))
+    ) {
+      throw new MafiaForbiddenException("Current user has no access to this entity");
+    }
+
+    return TaskDto.fromTask(task);
   }
 }

@@ -19,3 +19,11 @@ export function getRequestForPointForm(create, point, id) {
     return api.put(`/api/point/${id}`, point);
   }
 }
+
+export function getRequestForTaskForm(create, point, id) {
+  if(create) {
+    return api.post("/api/task", point);
+  } else {
+    return api.put(`/api/task/${id}`, point);
+  }
+}

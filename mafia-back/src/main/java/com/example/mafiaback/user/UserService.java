@@ -44,16 +44,8 @@ public class UserService implements UserDetailsService {
     User user = userOptional.get();
 
     if(user.getRole().equals(Role.ROLE_MANAGER)) {
-      if(!user.getId().equals(currentUuser.getId())) {
-        throw new MafiaForbiddenException("You have not access to this user");
-      }
       return UserDto.fromManager((Manager) user);
     } else {
-      Guard guard = (Guard) user;
-      if(!guard.getId().equals(currentUuser.getId()) && !guard.getManagerId().equals(currentUuser.getId())) {
-        throw new MafiaForbiddenException("You have not access to this user");
-      }
-      
       return UserDto.fromGuard((Guard) user);
     }
   }

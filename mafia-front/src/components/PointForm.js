@@ -42,12 +42,12 @@ export default function PointForm({create = true, onSuccess, renderedPoint}) {
     defaultValues: {...defaultValues}
   });
 
-  const onSubmit = (userFromForm) => {
+  const onSubmit = (pointFromForm) => {
     setButtonDisabled(true);
     setError(null);
     setSuccess(null);
 
-    getRequestForPointForm(create, userFromForm, renderedPoint ? renderedPoint.id : undefined).then(res => {
+    getRequestForPointForm(create, pointFromForm, renderedPoint ? renderedPoint.id : undefined).then(res => {
       reset({...defaultValues});
       setSuccess("Success!");
       if (onSuccess) {

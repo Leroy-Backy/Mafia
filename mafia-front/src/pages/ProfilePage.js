@@ -8,31 +8,38 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function ProfilePage() {
   const {id} = useParams();
+  const [userId, setUserId] = useState(null);
   const [renderedUser, setRenderedUser] = useState(null);
   const {user} = useAuth();
   const navigation = useNavigate();
   const [rerender, setRerender] = useState(false);
   
   useEffect(() => {
-    if(!user || !navigation) {
+    if(!navigation || !userId) {
       return;
     }
-    if(!id) {
-      setRenderedUser(user);
-    } else {
-      api.get(`/api/user/${id}`).then(res => {
-        setRenderedUser(res.data);
-      }).catch(err => {
-        if(!err.response || err.response.status === 404) {
-          navigation("/notfound");
-        }
-        
-        if(err.response.status === 403) {
-          navigation("")
-        }
-      });
+    api.get(`/api/user/${userId}`).then(res => {
+      setRenderedUser(res.data);
+    }).catch(err => {
+      if(!err.response || err.response.status === 404) {
+        navigation("/notfound");
+      }
+
+      if(err.response.status === 403) {
+        navigation("/accessdenied")
+      }
+    });
+  }, [userId, navigation, rerender]);
+  
+  useEffect(() => {
+    if(user) {
+      if (!id) {
+        setUserId(user.id)
+      } else {
+        setUserId(id);
+      }
     }
-  }, [user, id, navigation, rerender]);
+  }, [id, user]);
 
   return (
     renderedUser ?

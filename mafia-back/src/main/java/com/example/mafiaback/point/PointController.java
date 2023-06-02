@@ -21,7 +21,7 @@ public class PointController {
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasAuthority('ROLE_MANAGER')")
+  @PreAuthorize("isAuthenticated()")
   public ResponseEntity<PointDto> getPointById(@NonNull @PathVariable Integer id) {
     return ResponseEntity.ok(pointService.getPointById(id));
   }
