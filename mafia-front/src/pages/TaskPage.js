@@ -13,8 +13,6 @@ export default function TaskPage() {
   useEffect(() => {
     if(id && navigation) {
       api.get(`/api/task/${id}`).then(res => {
-        // const date = new Date(res.data.createdAt);
-        // res.data.createdAt = date.toLocaleString('pl')
         setRenderedTask(res.data);
       }).catch(err => {
         if(!err.response || err.response.status === 404) {

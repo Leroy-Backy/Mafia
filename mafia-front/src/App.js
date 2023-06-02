@@ -23,6 +23,7 @@ import TestPage from "./pages/TestPage";
 import CreateTaskPage from "./pages/CreateTaskPage";
 import PointPage from "./pages/PointPage";
 import TaskPage from "./pages/TaskPage";
+import TasksPage from "./pages/TasksPage";
 
 function App() {
   const [isInit, setInit] = useState(false);
@@ -45,6 +46,7 @@ function App() {
               <Route path="/user" element={<ProfilePage/>}/>
               <Route path="/user/:id" element={<ProfilePage/>}/>
               <Route path="/tasks">
+                <Route index element={<TasksPage/>}/>
                 <Route path=":id" element={<TaskPage/>}/>
               </Route>
               <Route element={<ManagerRoutes/>}>

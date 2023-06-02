@@ -29,8 +29,8 @@ public class TaskController {
   
   @GetMapping
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<List<TaskDto>> getAllTasksForUser() {
-    return ResponseEntity.ok(taskService.getAllTasksForUser());
+  public ResponseEntity<List<TaskDto>> getAllTasksForUser(@RequestParam(value = "status", required = false, defaultValue = "ALL") TaskStatus status) {
+    return ResponseEntity.ok(taskService.getAllTasksForUser(status));
   }
   
   @GetMapping("/{id}")

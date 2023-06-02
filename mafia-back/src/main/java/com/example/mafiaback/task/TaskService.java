@@ -28,15 +28,23 @@ public class TaskService {
   private final ManagerService managerService;
   private final PointRepository pointRepository;
   
-  public List<TaskDto> getAllTasksForUser() {
+  public List<TaskDto> getAllTasksForUser(TaskStatus status) {
     User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     
     List<Task> tasks;
     
     if(Role.isManager(currentUser.getRole())) {
-      tasks = taskRepository.findByManagerIdOrderByCreatedAtDesc(currentUser.getId());
+      if(TaskStatus.ALL.equals(status)) {
+        tasks = taskRepository.findByManagerIdOrderByCreatedAtDesc(currentUser.getId());
+      } else {
+        tasks = taskRepository.findByManagerIdAndTaskStatusOrderByCreatedAtDesc(currentUser.getId(), status);
+      }
     } else {
-      tasks = taskRepository.findByGuardIdOrderByCreatedAtDesc(currentUser.getId());
+      if(TaskStatus.ALL.equals(status)) {
+        tasks = taskRepository.findByGuardIdOrderByCreatedAtDesc(currentUser.getId());
+      } else {
+        tasks = taskRepository.findByGuardIdAndTaskStatusOrderByCreatedAtDesc(currentUser.getId(), status);
+      }
     }
     
     return tasks.stream().map(TaskDto::fromTask).toList();

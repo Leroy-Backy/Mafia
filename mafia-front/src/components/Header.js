@@ -12,9 +12,16 @@ export default function Header({isLoggedIn, isManager}) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/user" eventKey="/user">
-              <div>Profile</div>
-            </Nav.Link>
+            {isLoggedIn &&
+              <>
+                <Nav.Link as={Link} to="/user" eventKey="/user">
+                  <div>Profile</div>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/tasks" eventKey="/tasks">
+                  <div>Tasks</div>
+                </Nav.Link>
+              </>
+            }
             {isManager &&
               <>
                 <Nav.Link as={Link} to="/guards" eventKey="/guards">
@@ -22,9 +29,6 @@ export default function Header({isLoggedIn, isManager}) {
                 </Nav.Link>
                 <Nav.Link as={Link} to="/points" eventKey="/points">
                   <div>Points</div>
-                </Nav.Link>
-                <Nav.Link as={Link} to="/tasks" eventKey="/tasks">
-                  <div>Tasks</div>
                 </Nav.Link>
               </>
             }

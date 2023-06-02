@@ -19,7 +19,7 @@ export default function TaskForm({create = true, onSuccess, renderedTask}) {
   const {user} = useAuth();
   
   useEffect(() => {
-    if(!user) {
+    if(user) {
       if (create || isManager(user.role)) {
         Api.get("/api/guard").then(res => {
           setGuards(res.data);

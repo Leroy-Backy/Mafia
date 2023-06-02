@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import {useState} from "react";
 import TaskForm from "./TaskForm";
 
-export default function TaskCard({renderedTask, onTaskUpdate, min = true}) {
+export default function TaskCard({renderedTask, onTaskUpdate, min = false}) {
   const [showModal, setShowModal] = useState(false);
   
   const getMapsUrl = () => {
@@ -39,7 +39,7 @@ export default function TaskCard({renderedTask, onTaskUpdate, min = true}) {
         <div className="position-relative">
           <Button className="position-absolute m-2" style={{right: 0}} variant={statusColor[renderedTask.taskStatus]}
                   type="button" disabled={true}>
-            {taskStatusOptions.find(opt => opt.value === renderedTask.taskStatus).label}
+            {renderedTask.taskStatus ? taskStatusOptions.find(opt => opt.value === renderedTask.taskStatus).label : "Unknown"}
           </Button>
           <iframe title={renderedTask.id} src={`https://maps.google.com/maps?q=${getMapsUrl()}&z=14&output=embed`} height="450" width="100%"></iframe>
         </div>
@@ -48,7 +48,9 @@ export default function TaskCard({renderedTask, onTaskUpdate, min = true}) {
             {new Date(renderedTask.createdAt).toLocaleString("pl")}
           </div>
           <Card.Title>
-            {renderedTask.name} ({taskTypeOptions.find(opt => opt.value === renderedTask.taskType).label})
+            <Link to={`/tasks/${renderedTask.id}`} className="text-dark text-decoration-none">
+              {renderedTask.name} ({taskTypeOptions.find(opt => opt.value === renderedTask.taskType).label})
+            </Link>
           </Card.Title>
           
           <Card.Subtitle className="text-muted mt-2">
