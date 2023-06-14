@@ -30,6 +30,9 @@ export default function Header({isLoggedIn, isManager}) {
                 <Nav.Link as={Link} to="/points" eventKey="/points">
                   <div>Points</div>
                 </Nav.Link>
+                <Nav.Link as={Link} to="/reports" eventKey="/reports">
+                  <div>Reports</div>
+                </Nav.Link>
               </>
             }
           </Nav>

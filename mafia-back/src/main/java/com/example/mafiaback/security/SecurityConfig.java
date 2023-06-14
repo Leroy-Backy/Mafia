@@ -37,7 +37,7 @@ public class SecurityConfig {
         .cors().configurationSource(corsConfigurationSource())
         .and()
         .authorizeHttpRequests()
-        .requestMatchers("/api/auth/**", "/error").permitAll()
+        .requestMatchers("/api/auth/**", "api/report/download/*", "/error").permitAll()
         .anyRequest()
         .authenticated()
         .and()

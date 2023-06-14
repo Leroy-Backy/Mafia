@@ -15,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +48,14 @@ public class TaskService {
         tasks = taskRepository.findByGuardIdAndTaskStatusOrderByCreatedAtDesc(currentUser.getId(), status);
       }
     }
+    
+    return tasks.stream().map(TaskDto::fromTask).toList();
+  }
+  
+  public List<TaskDto> getTasksForManagerByDateRange(LocalDate from, LocalDate to) {
+    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    
+    List<Task> tasks = taskRepository.findByManagerIdAndCreatedAtGreaterThanEqualAndCreatedAtLessThanEqualOrderByCreatedAtDesc(currentUser.getId(), Timestamp.valueOf(from.atStartOfDay()), Timestamp.valueOf(to.atStartOfDay()));
     
     return tasks.stream().map(TaskDto::fromTask).toList();
   }

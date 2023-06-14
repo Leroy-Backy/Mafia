@@ -2,6 +2,9 @@ package com.example.mafiaback;
 
 import com.example.mafiaback.manager.Manager;
 import com.example.mafiaback.manager.ManagerRepository;
+import com.example.mafiaback.pdf.PdfService;
+import com.example.mafiaback.task.TaskDto;
+import com.example.mafiaback.task.TaskRepository;
 import com.example.mafiaback.user.Role;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class MafiaBackApplication {

@@ -4,9 +4,12 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CardField from "./CardField";
 import PointForm from "./PointForm";
+import {isManager} from "../utils/authUtils";
+import {useAuth} from "../context/AuthProvider";
 
 export default function PointCard({renderedPoint, onPointUpdate}) {
   const [showModal, setShowModal] = useState(false);
+  const {user} = useAuth();
   
   const getMapsUrl = () => {
     if(renderedPoint.latitude && renderedPoint.longitude) {
@@ -20,10 +23,12 @@ export default function PointCard({renderedPoint, onPointUpdate}) {
     <>
       <Card className={`mt-4 m-auto`} style={{width: "25rem"}}>
         <div className="position-relative">
-          <Button className="position-absolute m-2" style={{right: 0}} variant="primary"
-                  type="button" onClick={() => setShowModal(prev => !prev)}>
-            Edit
-          </Button>
+          {isManager(user.role) && renderedPoint.managerId === user.id &&
+            <Button className="position-absolute m-2" style={{right: 0}} variant="primary"
+                    type="button" onClick={() => setShowModal(prev => !prev)}>
+              Edit
+            </Button>
+          }
           <iframe title={renderedPoint.id} src={`https://maps.google.com/maps?q=${getMapsUrl()}&z=14&output=embed`} height="450" width="100%"></iframe>
         </div>
         <Card.Body>

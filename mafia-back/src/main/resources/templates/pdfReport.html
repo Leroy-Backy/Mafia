@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <style>
+      body {
+        font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      }
+      .card {
+        word-wrap: break-word;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        height: 100%;
+      }
+      .card-body {
+        padding: 10px !important;
+      }
+      .titles {
+        text-align: center !important;
+      }
+      .text-muted, hr {
+        color: #6c757d!important
+      }
+      td {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="titles">
+        <h1 th:text="'Report from ' + ${manager}"></h1>
+        <h3 th:text="${from} + ' - ' + ${to}">December 2023</h3>
+        <h3>Tasks</h3>
+    </div>
+
+    <div th:each="task : ${tasks}">
+        <table style="width: 100%">
+            <tr style="height: 100%">
+                <td rowspan="2" style="width: 42%;">
+                    <div class="col-5" style="height: 100%;">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="text-muted" th:text="${task.createdAt}"></span>
+                                <span style="float: right" th:text="${task.taskStatus}"></span>
+                                <div th:text="${task.name}"></div>
+                                <div class="text-muted">Point: </div>
+                                <div th:text="${task.point.name}"></div>
+                                <div class="text-muted">Guard: </div>
+                                <div th:text="${task.guard.firstName} + ' ' + ${task.guard.lastName}"></div>
+                                <div class="text-muted">Manager: </div>
+                                <div th:text="${task.manager.firstName} + ' ' + ${task.manager.lastName}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-muted">Description</div>
+                            <div th:text="${task.description}">Someone tries to rob biedronka, go there and do something</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 100%">
+                <td>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-muted">Result</div>
+                            <div th:text="${task.resultDescription}">I went there, had beaten some guys and gave robbers to the police</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table> 
+        <hr/>
+    </div>
+</div>
+
+</body>
+</html>

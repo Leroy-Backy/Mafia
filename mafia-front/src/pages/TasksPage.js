@@ -9,10 +9,13 @@ import {taskStatusOptions} from "../utils/consts";
 import Card from "react-bootstrap/Card";
 import {Link} from "react-router-dom";
 import * as Icon from "react-bootstrap-icons";
+import {useAuth} from "../context/AuthProvider";
+import {isManager} from "../utils/authUtils";
 
 export default function TasksPage() {
   const [data, setData] = useState(null);
-  const [status, setStatus] = useState("ALL")
+  const [status, setStatus] = useState("ALL");
+  const {user} = useAuth();
   
   useEffect(() => {
     api.get( `/api/task`, {params: {status: status}}).then(res => {
@@ -34,7 +37,7 @@ export default function TasksPage() {
   }
   
   return (
-    data ?
+    data && user ?
       <div>
         <Form className="mt-4">
           <Form.Select value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -45,9 +48,11 @@ export default function TasksPage() {
           </Form.Select>
         </Form>
         <Row>
-          <Col key="new" className="d-flex justify-content-center mb-4"  md={12} lg={6}>
-            {addNewTask()}
-          </Col>
+          {isManager(user.role) &&
+            <Col key="new" className="d-flex justify-content-center mb-4"  md={12} lg={6}>
+              {addNewTask()}
+            </Col>
+          }
           {data.map(task => (
             <Col key={task.id} className="d-flex justify-content-center" md={12} lg={6}>
               <TaskCard renderedTask={task} min={true}/>
