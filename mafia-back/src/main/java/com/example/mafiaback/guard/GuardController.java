@@ -20,8 +20,8 @@ public class GuardController {
   
   @PostMapping
   @PreAuthorize("hasAuthority('ROLE_MANAGER')")
-  public ResponseEntity<String> createGuard(@RequestBody UserDto userDto) {
-    return ResponseEntity.status(HttpStatus.CREATED).body("Guard was created successfully with id: " + guardService.createGuard(userDto));
+  public ResponseEntity<Integer> createGuard(@RequestBody UserDto userDto) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(guardService.createGuard(userDto));
   }
   
   @GetMapping

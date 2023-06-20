@@ -20,10 +20,6 @@ export default function ReportsPage() {
     });
   }, [rerender]);
   
-  useEffect(() => {
-    console.log("SYTART DATE>>>", startDate)
-  }, [startDate])
-  
   const generatePdf = () => {
     api.post(`/api/report?from=${startDate}&to=${endDate}`).then(res => {
       setRerender(prev => !prev);

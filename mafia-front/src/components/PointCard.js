@@ -6,9 +6,13 @@ import CardField from "./CardField";
 import PointForm from "./PointForm";
 import {isManager} from "../utils/authUtils";
 import {useAuth} from "../context/AuthProvider";
+import Api from "../utils/Api";
+import {useNavigate} from "react-router-dom";
 
 export default function PointCard({renderedPoint, onPointUpdate}) {
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
   const {user} = useAuth();
   
   const getMapsUrl = () => {
@@ -19,14 +23,29 @@ export default function PointCard({renderedPoint, onPointUpdate}) {
     }
   }
 
+  const deletePoint = () => {
+    Api.delete("/api/point/" + renderedPoint.id).then(() => {
+        navigate("/");
+      }
+    ).finally(() => {
+      setShowDeleteModal(false);
+    });
+  }
+
   return (
     <>
       <Card className={`mt-4 m-auto`} style={{width: "25rem"}}>
         <div className="position-relative">
           {isManager(user.role) && renderedPoint.managerId === user.id &&
-            <Button className="position-absolute m-2" style={{right: 0}} variant="primary"
+            <Button className="position-absolute m-2" style={{right: 0, width: 75}} variant="primary"
                     type="button" onClick={() => setShowModal(prev => !prev)}>
               Edit
+            </Button>
+          }
+          {(isManager(user.role) && renderedPoint.managerId === user.id) &&
+            <Button className="position-absolute m-2" variant="danger" style={{right: 0, top: 45}}
+                    type="button" onClick={() => setShowDeleteModal(prev => !prev)}>
+              Delete
             </Button>
           }
           <iframe title={renderedPoint.id} src={`https://maps.google.com/maps?q=${getMapsUrl()}&z=14&output=embed`} height="450" width="100%"></iframe>
@@ -66,6 +85,16 @@ export default function PointCard({renderedPoint, onPointUpdate}) {
             }
           }}/>
         </Modal.Body>
+      </Modal>
+
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Body>
+          Are you sure you want to delete this point?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={deletePoint}>Yes</Button>
+          <Button onClick={() => setShowDeleteModal(false)}>No</Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

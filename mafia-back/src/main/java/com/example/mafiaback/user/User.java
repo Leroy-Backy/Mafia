@@ -1,18 +1,18 @@
 package com.example.mafiaback.user;
 
+import com.example.mafiaback.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
@@ -35,7 +35,21 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
   
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  private Set<Token> tokens = new HashSet<>();
+  
   private boolean enabled;
+
+  public User(Integer id, String firstName, String lastName, String email, String password, String phone, Role role, boolean enabled) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.phone = phone;
+    this.role = role;
+    this.enabled = enabled;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
